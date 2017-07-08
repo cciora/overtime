@@ -1,0 +1,59 @@
+table {
+  width: 100%;
+  table-layout: fixed;
+  border: 2px solid #82CAFA;
+  border-radius: 8px;
+  border-spacing: 0px;
+  margin-top: 20px;
+}
+
+tr.header {
+  background-color: #82CAFA;
+}
+
+td {
+  border-top: 1px solid #82CAFA;
+  height: 50px;
+  padding-left: 8px;
+  vertical-align: middle;
+}
+
+tr.header > td {
+  font-weight: bold;
+  border-top: 0px;
+}
+
+input {
+  line-height: 26px;
+  width:80%;
+  border-color: #cccccc;
+  border-width: 1px;
+  border-radius: 5px;
+}
+
+a.edit, a.delete, a.create {
+  width: 32px;
+  height: 32px;
+  display: inline-block;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+a.edit {
+  background-image: url('./img/edit.png');
+}
+
+a.delete {
+  background-image: url('./img/delete.png');
+}
+
+a.create {
+  width: auto;
+  line-height: 32px;
+  padding: 0px 5px 0px 32px;
+  color: #157efb;
+  border: 1px solid #157efb;
+  border-radius: 5px;
+  background-repeat: no-repeat;
+  background-image: url('./img/add.png');
+}
