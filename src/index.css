@@ -1,3 +1,5 @@
+/** Overtime table **/
+
 table {
   width: 100%;
   table-layout: fixed;
@@ -56,4 +58,23 @@ a.create {
   border-radius: 5px;
   background-repeat: no-repeat;
   background-image: url('./img/add.png');
+}
+
+/** Filter area **/
+.monthFilter {
+  height: 30px;
+}
+
+.monthFilter a {
+  display: inline-block;
+  color: #157efb;;
+  border: 1px solid #157efb;
+  padding: 3px;
+  margin: 0px 3px;
+  cursor: pointer;
+}
+
+.monthFilter .selectedMonth{
+  color: white;
+  background-color: #157efb;
 }
