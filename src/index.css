@@ -1,12 +1,83 @@
-/** Overtime table **/
+/** Menu area **/
+.topMenu {
+  display: table;
+  border-spacing: 5px;
+}
 
+.topMenu  > div {
+  display: table-cell;
+  color: #157efb;
+  border: 1px solid #157efb;
+  border-radius: 5px;
+  vertical-align: bottom;
+}
+
+.topMenu .clickable {
+  cursor: pointer;
+}
+
+.topMenu .clickable:hover {
+  background-color: #dddddd;
+  color: #157efb;
+}
+
+.addOvertime {
+  background-repeat: no-repeat;
+  background-image: url('./img/add.png');
+  background-position: top;
+}
+
+.userSettings {
+  background-repeat: no-repeat;
+  background-image: url('./img/user_settings.png');
+  background-position: top;
+}
+
+.dateFilter {
+  width: 252px;
+  border-spacing: 2px;
+}
+
+.dateFilter .month {
+  display: table-cell;
+  color: #157efb;;
+  border: 1px solid #157efb;
+  padding: 3px;
+  margin: 0px 3px;
+  width: 30px;
+  text-align: center;
+}
+
+.dateFilter .selectedMonth{
+  color: white;
+  background-color: #157efb;
+}
+
+.dateFilter .year > div {
+  display: table-cell;
+}
+
+.dateFilter .year .prevYear {
+  padding: 0px 5px;
+}
+
+.dateFilter .year .currYear {
+  text-align: center;
+  width: 100%;
+}
+
+.dateFilter .year .nextYear {
+  padding: 0px 5px;
+}
+
+
+/** Overtime table **/
 table {
   width: 100%;
   table-layout: fixed;
   border: 2px solid #82CAFA;
   border-radius: 8px;
   border-spacing: 0px;
-  margin-top: 20px;
 }
 
 tr.header {
@@ -33,7 +104,7 @@ input {
   border-radius: 5px;
 }
 
-a.edit, a.delete, a.create {
+a.edit, a.delete {
   width: 32px;
   height: 32px;
   display: inline-block;
@@ -47,34 +118,4 @@ a.edit {
 
 a.delete {
   background-image: url('./img/delete.png');
-}
-
-a.create {
-  width: auto;
-  line-height: 32px;
-  padding: 0px 5px 0px 32px;
-  color: #157efb;
-  border: 1px solid #157efb;
-  border-radius: 5px;
-  background-repeat: no-repeat;
-  background-image: url('./img/add.png');
-}
-
-/** Filter area **/
-.monthFilter {
-  height: 30px;
-}
-
-.monthFilter a {
-  display: inline-block;
-  color: #157efb;;
-  border: 1px solid #157efb;
-  padding: 3px;
-  margin: 0px 3px;
-  cursor: pointer;
-}
-
-.monthFilter .selectedMonth{
-  color: white;
-  background-color: #157efb;
 }
