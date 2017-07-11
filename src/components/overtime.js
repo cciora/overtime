@@ -2,10 +2,12 @@ import React from 'react';
 import TopMenu from './top_menu';
 import TableHeader from './table_header';
 import TableRow from './table_row';
+import EditPopup from './edit_popup';
 
 class Overtime extends React.Component {
   constructor() {
     super();
+
     let entries = [];
     for (let y=2016; y<=2018; y++) {
       for (let m=1; m<=12; m++) {
@@ -19,13 +21,17 @@ class Overtime extends React.Component {
         })
       }
     }
+
     this.state = {
       user: 'cciora',
       filterMonth: new Date().getMonth()+1,
       filterYear: new Date().getFullYear(),
-      overtimeEntries: entries
+      overtimeEntries: entries,
+      popupVisible: false,
+      popupData: {}
     };
   }
+
 
   changeMonthFilter(m) {
     this.setState({filterMonth: m});
@@ -33,7 +39,23 @@ class Overtime extends React.Component {
 
   changeYearFilter(y) {
     this.setState({filterYear : y});
-  };
+  }
+
+  setPopupVisibility(visible) {
+    if(visible == false) {
+      this.setState({popupData: {}});
+    }
+    this.setState({popupVisible: visible});
+  }
+
+  openEditPopup(popupData) {
+    this.setState({popupData: popupData});
+    this.setPopupVisibility(true);
+  }
+
+  savePopupAction(popupData) {
+    this.setPopupVisibility(false);
+  }
 
   render() {
     const entries = [];
@@ -46,17 +68,23 @@ class Overtime extends React.Component {
     }
     const rows = entries.map((entry, index) => {
       return (
-        <TableRow row={entry} />
+        <TableRow row={entry} openEditPopup={() => this.openEditPopup(entry)} />
       );
     });
     return (
       <div id="overtime">
         <TopMenu selectedMonth={this.state.filterMonth} monthSelectionHandler={(m) => this.changeMonthFilter(m)}
-          selectedYear={this.state.filterYear} yearSelectionHandler={(y) => this.changeYearFilter(y)}/>
+          selectedYear={this.state.filterYear} yearSelectionHandler={(y) => this.changeYearFilter(y)}
+          showPopupHandler={() => this.setPopupVisibility(true)}
+        />
         <table>
-          <TableHeader />
-          {rows}
+          <tbody>
+            <TableHeader />
+            {rows}
+          </tbody>
         </table>
+        <EditPopup popupVisibility={this.state.popupVisible} popupData={this.state.popupData}
+          savePopupHandler={(d) => this.savePopupAction(d)} cancelPopupHandler={() => this.setPopupVisibility(false)}/>
       </div>
     );
   }

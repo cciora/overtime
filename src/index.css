@@ -1,3 +1,7 @@
+#root {
+  max-width: 1000px;
+}
+
 /** Menu area **/
 .topMenu {
   display: table;
@@ -104,7 +108,7 @@ input {
   border-radius: 5px;
 }
 
-a.edit, a.delete {
+.rowEdit, .rowDelete {
   width: 32px;
   height: 32px;
   display: inline-block;
@@ -112,10 +116,46 @@ a.edit, a.delete {
   margin-right: 5px;
 }
 
-a.edit {
+.rowEdit {
   background-image: url('./img/edit.png');
 }
 
-a.delete {
+.rowDelete {
   background-image: url('./img/delete.png');
+}
+
+/** Edit popup **/
+.ReactModal__Content {
+    height: 300px;
+    border-radius: 10px;
+    border-color: #157efb;
+}
+
+.editPopup {
+  width: 100%;
+}
+
+.editPopup * {
+  vertical-align: top;
+}
+
+.editPopup input, .editPopup textarea {
+  width: 70%;
+  margin-bottom: 10px;
+}
+
+.editPopup label {
+  width: 25%;
+  display: inline-block;
+  text-align: right;
+  margin-right: 10px;
+  padding-top: 7px;
+}
+
+.popupButtonsArea {
+  text-align: center;
+}
+
+.popupButtonsArea button {
+  margin: 3px 10px;
 }

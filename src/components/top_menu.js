@@ -14,7 +14,7 @@ class TopMenu extends React.Component {
     });
     return (
       <div className="topMenu">
-        <div className="addOvertime clickable">Add Item</div>
+        <div className="addOvertime clickable" onClick={() => this.props.showPopupHandler()}>Add Item</div>
         <DateFilter month={this.props.selectedMonth} year={this.props.selectedYear}
           setMonth={this.props.monthSelectionHandler} setYear={this.props.yearSelectionHandler} />
         <div className="userSettings clickable">User Settings</div>
