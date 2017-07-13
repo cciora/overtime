@@ -76,7 +76,7 @@
 
 
 /** Overtime table **/
-table {
+table.overtime {
   width: 100%;
   table-layout: fixed;
   border: 2px solid #82CAFA;
@@ -84,28 +84,20 @@ table {
   border-spacing: 0px;
 }
 
-tr.header {
+table.overtime tr.header {
   background-color: #82CAFA;
 }
 
-td {
+table.overtime td {
   border-top: 1px solid #82CAFA;
   height: 50px;
   padding-left: 8px;
   vertical-align: middle;
 }
 
-tr.header > td {
+table.overtime tr.header > td {
   font-weight: bold;
   border-top: 0px;
-}
-
-input {
-  line-height: 26px;
-  width:80%;
-  border-color: #cccccc;
-  border-width: 1px;
-  border-radius: 5px;
 }
 
 .rowEdit, .rowDelete {
@@ -131,31 +123,31 @@ input {
     border-color: #157efb;
 }
 
-.editPopup {
+.overtimeForm {
   width: 100%;
 }
 
-.editPopup * {
-  vertical-align: top;
-}
-
-.editPopup input, .editPopup textarea {
-  width: 70%;
-  margin-bottom: 10px;
-}
-
-.editPopup label {
-  width: 25%;
-  display: inline-block;
+.overtimeForm td:first-child {
+  width: 30%;
   text-align: right;
-  margin-right: 10px;
-  padding-top: 7px;
 }
 
-.popupButtonsArea {
-  text-align: center;
+.overtimeForm input {
+  line-height: 26px;
+  width:80%;
+  border-color: #cccccc;
+  border-width: 1px;
+  border-radius: 5px;
 }
 
-.popupButtonsArea button {
-  margin: 3px 10px;
+.overtimeForm textarea {
+  width: 100%;
+}
+
+.overtimeForm textarea {
+  resize: none;
+}
+
+.overtimeDatePicker{
+  width: 100%;
 }

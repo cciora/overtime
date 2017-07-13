@@ -8,7 +8,7 @@ class DateFilter extends React.Component {
       if(idx > 0) {
         const cls = this.props.month === idx ? 'month selectedMonth clickable' : 'month clickable';
         return (
-          <a onClick={() => this.props.setMonth(idx)}>
+          <a key={month} onClick={() => this.props.setMonth(idx)}>
             <div className={cls}>
               {month}
             </div>
