@@ -47,20 +47,11 @@ class Overtime extends React.Component {
   }
 
   setPopupVisibility(visible) {
-    if(visible == false) {
-      this.setState({popupData: {}});
-    }
     this.setState({popupVisible: visible});
   }
 
   openEditPopup(popupData) {
     let temp = Object.assign({}, popupData);
-    if (!temp.date) {
-      temp.date = null;
-    }
-    if(!temp.freeTimeOn) {
-      temp.freeTimeOn = null;
-    }
     this.setState({popupData: temp});
     this.setPopupVisibility(true);
   }
@@ -73,6 +64,7 @@ class Overtime extends React.Component {
     let popupData = Object.assign({}, this.state.popupData);
     let entries = this.state.overtimeEntries.slice();
     if(popupData.id){
+      // replace the existent entry with the value stored inside the popupData
       for (let i=0; i<entries.length; i++) {
         if(entries[i].id == popupData.id) {
           entries[i] = popupData;
@@ -80,6 +72,7 @@ class Overtime extends React.Component {
         }
       }
     } else {
+      // add a new entry to the list of overtime entries
       const nextKey = this.state.nextKey;
       popupData.id = nextKey;
       this.setState({nextKey: nextKey+1});
@@ -88,6 +81,18 @@ class Overtime extends React.Component {
     this.setState({overtimeEntries: entries});
 
     this.setPopupVisibility(false);
+  }
+
+  deleteOvertimeEntry(entryId) {
+    console.log('delete ' + entryId);
+    let entries = this.state.overtimeEntries.slice();
+    for (let i=0; i<entries.length; i++) {
+      if(entries[i].id == entryId) {
+        entries.splice(i,1);
+        break;
+      }
+    }
+    this.setState({overtimeEntries: entries});
   }
 
   render() {
@@ -101,14 +106,14 @@ class Overtime extends React.Component {
     }
     const rows = entries.map((entry, index) => {
       return (
-        <TableRow key={entry.id} row={entry} openEditPopup={() => this.openEditPopup(entry)} />
+        <TableRow key={entry.id} row={entry} openEditPopup={() => this.openEditPopup(entry)} deleteRow={(id) => this.deleteOvertimeEntry(id)} />
       );
     });
     return (
       <div id="overtime">
         <TopMenu selectedMonth={this.state.filterMonth} monthSelectionHandler={(m) => this.changeMonthFilter(m)}
           selectedYear={this.state.filterYear} yearSelectionHandler={(y) => this.changeYearFilter(y)}
-          showPopupHandler={() => this.setPopupVisibility(true)}
+          showPopupHandler={() => this.openEditPopup()}
         />
         <table className="overtime">
           <tbody>
