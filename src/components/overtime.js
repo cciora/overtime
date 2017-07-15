@@ -1,8 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import TopMenu from './top_menu';
-import TableHeader from './table_header';
-import TableRow from './table_row';
+import OvertimeOverview from './overtime_overview';
 import EditPopup from './edit_popup';
 
 class Overtime extends React.Component {
@@ -33,7 +32,8 @@ class Overtime extends React.Component {
       overtimeEntries: entries,
       popupVisible: false,
       popupData: {},
-      nextKey: key
+      nextKey: key,
+      visibleView: 'overtime'
     };
   }
 
@@ -95,36 +95,14 @@ class Overtime extends React.Component {
   }
 
   render() {
-    const entries = [];
-    for (let i=0; i< this.state.overtimeEntries.length; i++) {
-      const entry = this.state.overtimeEntries[i];
-      const d = moment(entry.date,'DD.MM.YYYY');
-      if(d.month()+1 === this.state.filterMonth && d.year() === this.state.filterYear) {
-        entries.push(entry);
-      }
-    }
-    let rows;
-    if(entries.length > 0) {
-      rows = entries.map((entry, index) => {
-        return (
-          <TableRow key={entry.id} row={entry} openEditPopup={() => this.openEditPopup(entry)} deleteRow={(id) => this.deleteOvertimeEntry(id)} />
-        );
-      });
-    } else {
-      rows = <tr><td colSpan="6">No data to display!</td></tr>;
-    }
     return (
       <div id="overtime">
         <TopMenu selectedMonth={this.state.filterMonth} monthSelectionHandler={(m) => this.changeMonthFilter(m)}
           selectedYear={this.state.filterYear} yearSelectionHandler={(y) => this.changeYearFilter(y)}
           showPopupHandler={() => this.openEditPopup()}
         />
-        <table className="overtime">
-          <tbody>
-            <TableHeader />
-            {rows}
-          </tbody>
-        </table>
+        <OvertimeOverview entries={this.state.overtimeEntries} year={this.state.filterYear} month={this.state.filterMonth}
+          openEditPopup={(o) => this.openEditPopup(o)} deleteOvertimeEntry={(o) => this.deleteOvertimeEntry(o)} />
         <EditPopup popupVisibility={this.state.popupVisible} popupData={this.state.popupData}
           savePopupHandler={(d) => this.savePopupAction(d)} cancelPopupHandler={() => this.setPopupVisibility(false)}
           updatePopupData={(d) => this.updatePopupData(d)}/>
