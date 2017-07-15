@@ -110,15 +110,17 @@ class Overtime extends React.Component {
     this.setState({visibleView: viewId});
   }
 
-  updateUserSettings(settings) {
+  saveUserSettings(settings) {
     this.setState({userSettings: settings});
+    this.changeVisibleView(view.OVERTIME);
   }
 
   render() {
     let content;
     if(this.state.visibleView === view.USER_SETTINGS){
-      content = <Settings data={this.state.userSettings} updateSettings={(settings) => this.updateUserSettings(settings)}
-                    saveButtonHandler={() => this.changeVisibleView(view.OVERTIME)} cancelButtonHandler={() => this.changeVisibleView(view.OVERTIME)} />;
+      content = <Settings data={this.state.userSettings}
+                    saveAction={(settings) => this.saveUserSettings(settings)}
+                    cancelAction={() => this.changeVisibleView(view.OVERTIME)} />;
     } else if (this.state.visibleView === view.OVERTIME_EDIT) {
       content = <OvertimeEdit data={this.state.tempOvertime}
                     saveHandler={(d) => this.saveOvertimeEntry(d)} cancelHandler={() => this.changeVisibleView(view.OVERTIME)}
