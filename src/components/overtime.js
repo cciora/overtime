@@ -66,7 +66,7 @@ class Overtime extends React.Component {
     if(popupData.id){
       // replace the existent entry with the value stored inside the popupData
       for (let i=0; i<entries.length; i++) {
-        if(entries[i].id == popupData.id) {
+        if(entries[i].id === popupData.id) {
           entries[i] = popupData;
           break;
         }
@@ -87,7 +87,7 @@ class Overtime extends React.Component {
     console.log('delete ' + entryId);
     let entries = this.state.overtimeEntries.slice();
     for (let i=0; i<entries.length; i++) {
-      if(entries[i].id == entryId) {
+      if(entries[i].id === entryId) {
         entries.splice(i,1);
         break;
       }
