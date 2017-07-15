@@ -196,6 +196,12 @@ table.overtime tr.header > td {
   color: #333333;
 }
 
+.editFormWrapper .validation {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+
 /* override style from the date picker component */
 .editForm .react-datepicker__close-icon {
   display: inline;

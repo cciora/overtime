@@ -45,6 +45,10 @@ class Overtime extends React.Component {
       nextKey: key,
       visibleView: view.OVERTIME
     };
+
+    if (!this.state.userSettings.userId || !this.state.userSettings.userName || !this.state.userSettings.superiorName) {
+      this.state.visibleView = view.USER_SETTINGS;
+    }
   }
 
   changeMonthFilter(m) {

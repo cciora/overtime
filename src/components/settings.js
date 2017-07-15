@@ -4,8 +4,13 @@ class Settings extends React.Component {
   constructor() {
     super();
 
+    this.state = {
+      validationMessage: ''
+    };
+
     this.changeUserName = this.changeUserName.bind(this);
     this.changeSuperiorName = this.changeSuperiorName.bind(this);
+    this.validateAndCallHandler = this.validateAndCallHandler.bind(this);
   }
 
   changeUserName(e) {
@@ -18,6 +23,19 @@ class Settings extends React.Component {
     let temp = Object.assign({}, this.props.data);
     temp.superiorName = e.target.value;
     this.props.updateSettings(temp);
+  }
+
+  isValidValue(v) {
+    return v && v.trim() !== '';
+  }
+
+  validateAndCallHandler(handler){
+    if (this.isValidValue(this.props.data.userName) && this.isValidValue(this.props.data.superiorName)) {
+      this.setState({validationMessage: ''});
+      handler.call();
+    } else {
+      this.setState({validationMessage: 'All fields are mandatory!'});
+    }
   }
 
   render() {
@@ -38,8 +56,11 @@ class Settings extends React.Component {
             </div>
           </div>
           <div className="footer">
-            <button onClick={this.props.saveButtonHandler}>Save</button>
-            <button onClick={this.props.cancelButtonHandler}>Cancel</button>
+            <button onClick={() => this.validateAndCallHandler(this.props.saveButtonHandler)}>Save</button>
+            <button onClick={() => this.validateAndCallHandler(this.props.cancelButtonHandler)}>Cancel</button>
+          </div>
+          <div className="validation">
+            {this.state.validationMessage}
           </div>
         </div>
     );
