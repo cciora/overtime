@@ -19,7 +19,7 @@ class Settings extends React.Component {
     this.cancelButtonHandler = this.cancelButtonHandler.bind(this);
   }
 
-  componentDidMount(nextProps) {
+  componentDidMount() {
     this.setState({data: this.props.data});
   }
 

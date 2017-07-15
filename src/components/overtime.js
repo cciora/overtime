@@ -33,6 +33,7 @@ class Overtime extends React.Component {
     }
 
     this.state = {
+      visibleView: view.OVERTIME,
       userSettings: {
         userId: 'cciora',
         userName: '',
@@ -41,14 +42,13 @@ class Overtime extends React.Component {
       filterMonth: new Date().getMonth()+1,
       filterYear: new Date().getFullYear(),
       overtimeEntries: entries,
-      tempOvertime: {},
-      nextKey: key,
-      visibleView: view.OVERTIME
+      editEntry: {},
+      nextKey: key
     };
 
-    if (!this.state.userSettings.userId || !this.state.userSettings.userName || !this.state.userSettings.superiorName) {
-      this.state.visibleView = view.USER_SETTINGS;
-    }
+    // if (!this.state.userSettings.userId || !this.state.userSettings.userName || !this.state.userSettings.superiorName) {
+    //   this.state.visibleView = view.USER_SETTINGS;
+    // }
   }
 
   changeMonthFilter(m) {
@@ -61,28 +61,25 @@ class Overtime extends React.Component {
 
   showEditPage(data) {
     let temp = Object.assign({}, data);
-    this.setState({
-      tempOvertime: temp,
-      visibleView: view.OVERTIME_EDIT
-    });
+    this.setState({editEntry: temp});
+    this.changeVisibleView(view.OVERTIME_EDIT);
   }
 
-  updateTempOvertime(data) {
-    this.setState({tempOvertime: data});
-  }
-
-  saveOvertimeEntry() {
-    let tempOvertime = Object.assign({}, this.state.tempOvertime);
+  saveOvertimeEntry(data) {
+    let tempOvertime = Object.assign({}, data);
     let entries = this.state.overtimeEntries.slice();
+    let foundEntry = false;
     if(tempOvertime.id){
       // replace the existent entry with the value stored inside the tempOvertime
       for (let i=0; i<entries.length; i++) {
         if(entries[i].id === tempOvertime.id) {
           entries[i] = tempOvertime;
+          foundEntry = true;
           break;
         }
       }
-    } else {
+    }
+    if (!foundEntry) {
       // add a new entry to the list of overtime entries
       const nextKey = this.state.nextKey;
       tempOvertime.id = nextKey;
@@ -122,18 +119,19 @@ class Overtime extends React.Component {
                     saveAction={(settings) => this.saveUserSettings(settings)}
                     cancelAction={() => this.changeVisibleView(view.OVERTIME)} />;
     } else if (this.state.visibleView === view.OVERTIME_EDIT) {
-      content = <OvertimeEdit data={this.state.tempOvertime}
-                    saveHandler={(d) => this.saveOvertimeEntry(d)} cancelHandler={() => this.changeVisibleView(view.OVERTIME)}
-                    updateData={(d) => this.updateTempOvertime(d)}/>
+      content = <OvertimeEdit data={this.state.editEntry}
+                    saveAction={(d) => this.saveOvertimeEntry(d)}
+                    cancelAction={() => this.changeVisibleView(view.OVERTIME)} />
     } else {
       content = <OvertimeOverview entries={this.state.overtimeEntries} year={this.state.filterYear} month={this.state.filterMonth}
-                    showEditPage={(o) => this.showEditPage(o)} deleteOvertimeEntry={(o) => this.deleteOvertimeEntry(o)} />;
+                    showEditPage={(d) => this.showEditPage(d)} deleteOvertimeEntry={(o) => this.deleteOvertimeEntry(o)} />;
     }
     return (
       <div id="overtime">
         <TopMenu selectedMonth={this.state.filterMonth} monthSelectionHandler={(m) => this.changeMonthFilter(m)}
           selectedYear={this.state.filterYear} yearSelectionHandler={(y) => this.changeYearFilter(y)}
-          showAddNewOvertime={() => this.showEditPage()} showSettings={() => this.changeVisibleView(view.USER_SETTINGS)}
+          showAddNewOvertime={() => this.showEditPage({})}
+          showSettings={() => this.changeVisibleView(view.USER_SETTINGS)}
         />
         {content}
       </div>
