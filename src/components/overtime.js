@@ -84,7 +84,6 @@ class Overtime extends React.Component {
   }
 
   deleteOvertimeEntry(entryId) {
-    console.log('delete ' + entryId);
     let entries = this.state.overtimeEntries.slice();
     for (let i=0; i<entries.length; i++) {
       if(entries[i].id === entryId) {
@@ -104,11 +103,16 @@ class Overtime extends React.Component {
         entries.push(entry);
       }
     }
-    const rows = entries.map((entry, index) => {
-      return (
-        <TableRow key={entry.id} row={entry} openEditPopup={() => this.openEditPopup(entry)} deleteRow={(id) => this.deleteOvertimeEntry(id)} />
-      );
-    });
+    let rows;
+    if(entries.length > 0) {
+      rows = entries.map((entry, index) => {
+        return (
+          <TableRow key={entry.id} row={entry} openEditPopup={() => this.openEditPopup(entry)} deleteRow={(id) => this.deleteOvertimeEntry(id)} />
+        );
+      });
+    } else {
+      rows = <tr><td colSpan="6">No data to display!</td></tr>;
+    }
     return (
       <div id="overtime">
         <TopMenu selectedMonth={this.state.filterMonth} monthSelectionHandler={(m) => this.changeMonthFilter(m)}
