@@ -1,19 +1,28 @@
-#root {
+#overtime {
   max-width: 1000px;
 }
 
 /** Menu area **/
+.topMenuWraper {
+    width: 100%;
+    background: #DDDDDD;
+    background: -webkit-linear-gradient(#dddddd, #aaaaaa); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#dddddd, #aaaaaa); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#dddddd, #aaaaaa); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#dddddd, #aaaaaa); /* Standard syntax */
+    border: 2px solid #aaaaaa;
+    border-radius: 5px;
+}
+
 .topMenu {
   display: table;
   border-spacing: 5px;
+  color: #333333;
 }
 
-.topMenu  > div {
+.topMenu  > span {
   display: table-cell;
-  color: #157efb;
-  border: 1px solid #157efb;
-  border-radius: 5px;
-  vertical-align: bottom;
+  vertical-align: middle;
 }
 
 .topMenu .clickable {
@@ -22,19 +31,30 @@
 
 .topMenu .clickable:hover {
   background-color: #dddddd;
-  color: #157efb;
 }
 
 .addOvertime {
   background-repeat: no-repeat;
   background-image: url('./img/add.png');
-  background-position: top;
+  background-position: left;
+  padding-left: 30px;
+  padding-right: 5px;
 }
 
 .userSettings {
   background-repeat: no-repeat;
-  background-image: url('./img/user_settings.png');
-  background-position: top;
+  background-image: url('./img/settings.png');
+  background-position: left;
+  padding-left: 60px;
+  padding-right: 5px;
+}
+
+.topMenu .separator {
+  width: 1px;
+  background: -webkit-linear-gradient(#bbbbbb, #888888); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(#bbbbbb, #888888); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(#bbbbbb, #888888); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(#bbbbbb, #888888); /* Standard syntax */
 }
 
 .dateFilter {
@@ -42,10 +62,21 @@
   border-spacing: 2px;
 }
 
+.dateFilter .container {
+  display: table-cell;
+  text-align: center;
+  width: 100%;
+}
+
+.dateFilter .arrow {
+  display: table-cell;
+  border: 1px solid #999999;
+  padding: 3px 8px;
+}
+
 .dateFilter .month {
   display: table-cell;
-  color: #157efb;;
-  border: 1px solid #157efb;
+  border: 1px solid #999999;
   padding: 3px;
   margin: 0px 3px;
   width: 30px;
@@ -53,43 +84,32 @@
 }
 
 .dateFilter .selectedMonth{
-  color: white;
-  background-color: #157efb;
-}
-
-.dateFilter .year > div {
-  display: table-cell;
-}
-
-.dateFilter .year .prevYear {
-  padding: 0px 5px;
-}
-
-.dateFilter .year .currYear {
-  text-align: center;
-  width: 100%;
-}
-
-.dateFilter .year .nextYear {
-  padding: 0px 5px;
+  font-weight: bold;
 }
 
 
 /** Overtime table **/
 table.overtime {
+  margin-top: 5px;
   width: 100%;
   table-layout: fixed;
-  border: 2px solid #82CAFA;
-  border-radius: 8px;
+  border: 2px solid #aaaaaa;
+  border-radius: 5px;
   border-spacing: 0px;
+  color: #333333;
 }
 
 table.overtime tr.header {
-  background-color: #82CAFA;
+  background: #DDDDDD;
+  background: -webkit-linear-gradient(#dddddd, #aaaaaa); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(#dddddd, #aaaaaa); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(#dddddd, #aaaaaa); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(#dddddd, #aaaaaa); /* Standard syntax */
+
 }
 
 table.overtime td {
-  border-top: 1px solid #82CAFA;
+  border-top: 1px solid #aaaaaa;
   height: 50px;
   padding-left: 8px;
   vertical-align: middle;
@@ -109,11 +129,15 @@ table.overtime tr.header > td {
 }
 
 .rowEdit {
-  background-image: url('./img/edit.png');
+  background-image: url('./img/edit24.png');
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .rowDelete {
-  background-image: url('./img/delete.png');
+  background-image: url('./img/delete24.png');
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 /** Edit popup **/
@@ -124,24 +148,31 @@ table.overtime tr.header > td {
 }
 
 .overtimeForm {
-  width: 100%;
+  width: 80%;
+  color: #333333;
+  border-spacing: 3px;
 }
 
-.overtimeForm td:first-child {
-  width: 30%;
+.overtimeForm tbody td:first-child {
+  width: 35%;
   text-align: right;
 }
 
 .overtimeForm input {
   line-height: 26px;
-  width:80%;
   border-color: #cccccc;
   border-width: 1px;
   border-radius: 5px;
+  padding: 0px 5px;
+}
+
+.overtimeForm .react-datepicker__close-icon {
+  display: inline;
 }
 
 .overtimeForm textarea {
   width: 100%;
+  padding: 5px;
 }
 
 .overtimeForm textarea {
@@ -150,4 +181,16 @@ table.overtime tr.header > td {
 
 .overtimeDatePicker{
   width: 100%;
+}
+
+td.buttons {
+  text-align: center;
+}
+
+.buttons button {
+  padding: 3px 5px;
+  border: 1px solid #aaaaaa;
+  font-size: 14px;
+  border-radius: 5px;
+  margin: 5px;
 }

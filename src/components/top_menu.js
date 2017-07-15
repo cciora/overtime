@@ -13,11 +13,15 @@ class TopMenu extends React.Component {
       );
     });
     return (
-      <div className="topMenu">
-        <div className="addOvertime clickable" onClick={() => this.props.showPopupHandler()}>Add Item</div>
-        <DateFilter month={this.props.selectedMonth} year={this.props.selectedYear}
-          setMonth={this.props.monthSelectionHandler} setYear={this.props.yearSelectionHandler} />
-        <div className="userSettings clickable">User Settings</div>
+      <div className="topMenuWraper">
+        <div className="topMenu">
+          <span className="addOvertime clickable" onClick={() => this.props.showPopupHandler()}>Add Item</span>
+          <span className="separator" />
+          <span className="userSettings clickable">User Settings</span>
+          <span className="separator" />
+          <DateFilter month={this.props.selectedMonth} year={this.props.selectedYear}
+            setMonth={this.props.monthSelectionHandler} setYear={this.props.yearSelectionHandler} />
+        </div>
       </div>
     );
   }

@@ -59,7 +59,7 @@ class EditPopup extends React.Component {
         <table className="overtimeForm">
           <tbody>
           <tr>
-            <td width="30%">Date:</td>
+            <td>Date:</td>
             <td>
               <DatePicker selected={this.props.popupData.date ? moment(this.props.popupData.date,'DD.MM.YYYY') : ''} onChange={this.handleOvertimeDateChange}
                 className="overtimeDatePicker" dateFormat="DD.MM.YYYY" placeholderText="Date" required="true" />
@@ -90,13 +90,15 @@ class EditPopup extends React.Component {
               <textarea id="comment" rows="6" value={this.props.popupData.comment} onChange={this.handleCommentChange} />
             </td>
           </tr>
+          </tbody>
+          <tfoot>
           <tr>
-            <td colSpan="2" >
+            <td colSpan="2" className="buttons">
               <button onClick={() => this.props.savePopupHandler(this.props.popupData)}>Save</button>
               <button onClick={() => this.props.cancelPopupHandler()}>Cancel</button>
             </td>
           </tr>
-          </tbody>
+          </tfoot>
         </table>
       </Modal>
     );
