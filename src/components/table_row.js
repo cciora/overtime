@@ -10,7 +10,7 @@ class TableRow extends React.Component {
         <td>{this.props.row.freeTimeOn}</td>
         <td>{this.props.row.comment}</td>
         <td>
-          <span className="rowEdit" onClick={() => this.props.openEditPopup()}>&nbsp;</span>
+          <span className="rowEdit" onClick={() => this.props.showEditPage()}>&nbsp;</span>
           <span className="rowDelete" onClick={() => this.props.deleteRow(this.props.row.id)}>&nbsp;</span>
         </td>
       </tr>

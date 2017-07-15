@@ -17,7 +17,7 @@ class OvertimeOverview extends React.Component {
     if(entries.length > 0) {
       rows = entries.map((entry, index) => {
         return (
-          <TableRow key={entry.id} row={entry} openEditPopup={() => this.props.openEditPopup(entry)} deleteRow={(id) => this.props.deleteOvertimeEntry(id)} />
+          <TableRow key={entry.id} row={entry} showEditPage={() => this.props.showEditPage(entry)} deleteRow={(id) => this.props.deleteOvertimeEntry(id)} />
         );
       });
     } else {

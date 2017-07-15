@@ -3,7 +3,13 @@ import moment from 'moment';
 import TopMenu from './top_menu';
 import OvertimeOverview from './overtime_overview';
 import Settings from './settings';
-import EditPopup from './edit_popup';
+import OvertimeEdit from './overtime_edit';
+
+const view = {
+  OVERTIME: 'overtime',
+  OVERTIME_EDIT: 'overtimeEdit',
+  USER_SETTINGS: 'userSettings'
+};
 
 class Overtime extends React.Component {
   constructor() {
@@ -28,15 +34,16 @@ class Overtime extends React.Component {
 
     this.state = {
       userSettings: {
-        userId: 'cciora'
+        userId: 'cciora',
+        userName: '',
+        superiorName: ''
       },
       filterMonth: new Date().getMonth()+1,
       filterYear: new Date().getFullYear(),
       overtimeEntries: entries,
-      popupVisible: false,
-      popupData: {},
+      tempOvertime: {},
       nextKey: key,
-      visibleView: 'overview'
+      visibleView: view.OVERTIME
     };
   }
 
@@ -48,41 +55,40 @@ class Overtime extends React.Component {
     this.setState({filterYear : y});
   }
 
-  setPopupVisibility(visible) {
-    this.setState({popupVisible: visible});
+  showEditPage(data) {
+    let temp = Object.assign({}, data);
+    this.setState({
+      tempOvertime: temp,
+      visibleView: view.OVERTIME_EDIT
+    });
   }
 
-  openEditPopup(popupData) {
-    let temp = Object.assign({}, popupData);
-    this.setState({popupData: temp});
-    this.setPopupVisibility(true);
+  updateTempOvertime(data) {
+    this.setState({tempOvertime: data});
   }
 
-  updatePopupData(popupData) {
-    this.setState({popupData: popupData});
-  }
-
-  savePopupAction() {
-    let popupData = Object.assign({}, this.state.popupData);
+  saveOvertimeEntry() {
+    let tempOvertime = Object.assign({}, this.state.tempOvertime);
     let entries = this.state.overtimeEntries.slice();
-    if(popupData.id){
-      // replace the existent entry with the value stored inside the popupData
+    if(tempOvertime.id){
+      // replace the existent entry with the value stored inside the tempOvertime
       for (let i=0; i<entries.length; i++) {
-        if(entries[i].id === popupData.id) {
-          entries[i] = popupData;
+        if(entries[i].id === tempOvertime.id) {
+          entries[i] = tempOvertime;
           break;
         }
       }
     } else {
       // add a new entry to the list of overtime entries
       const nextKey = this.state.nextKey;
-      popupData.id = nextKey;
+      tempOvertime.id = nextKey;
       this.setState({nextKey: nextKey+1});
-      entries.push(popupData);
+      entries.push(tempOvertime);
     }
-    this.setState({overtimeEntries: entries});
-
-    this.setPopupVisibility(false);
+    this.setState({
+      overtimeEntries: entries,
+      visibleView: view.OVERTIME
+    });
   }
 
   deleteOvertimeEntry(entryId) {
@@ -106,26 +112,24 @@ class Overtime extends React.Component {
 
   render() {
     let content;
-    if(this.state.visibleView === 'settings'){
+    if(this.state.visibleView === view.USER_SETTINGS){
       content = <Settings data={this.state.userSettings} updateSettings={(settings) => this.updateUserSettings(settings)}
-                    saveButtonHandler={() => this.changeVisibleView('overview')} cancelButtonHandler={() => this.changeVisibleView('overview')} />;
+                    saveButtonHandler={() => this.changeVisibleView(view.OVERTIME)} cancelButtonHandler={() => this.changeVisibleView(view.OVERTIME)} />;
+    } else if (this.state.visibleView === view.OVERTIME_EDIT) {
+      content = <OvertimeEdit data={this.state.tempOvertime}
+                    saveHandler={(d) => this.saveOvertimeEntry(d)} cancelHandler={() => this.changeVisibleView(view.OVERTIME)}
+                    updateData={(d) => this.updateTempOvertime(d)}/>
     } else {
       content = <OvertimeOverview entries={this.state.overtimeEntries} year={this.state.filterYear} month={this.state.filterMonth}
-                    openEditPopup={(o) => this.openEditPopup(o)} deleteOvertimeEntry={(o) => this.deleteOvertimeEntry(o)} />;
-    }
-    switch(this.state.visibleView) {
-      case 'settings' :
+                    showEditPage={(o) => this.showEditPage(o)} deleteOvertimeEntry={(o) => this.deleteOvertimeEntry(o)} />;
     }
     return (
       <div id="overtime">
         <TopMenu selectedMonth={this.state.filterMonth} monthSelectionHandler={(m) => this.changeMonthFilter(m)}
           selectedYear={this.state.filterYear} yearSelectionHandler={(y) => this.changeYearFilter(y)}
-          showPopupHandler={() => this.openEditPopup()} showSettings={() => this.changeVisibleView('settings')}
+          showAddNewOvertime={() => this.showEditPage()} showSettings={() => this.changeVisibleView(view.USER_SETTINGS)}
         />
         {content}
-        <EditPopup popupVisibility={this.state.popupVisible} popupData={this.state.popupData}
-          savePopupHandler={(d) => this.savePopupAction(d)} cancelPopupHandler={() => this.setPopupVisibility(false)}
-          updatePopupData={(d) => this.updatePopupData(d)}/>
       </div>
     );
   }

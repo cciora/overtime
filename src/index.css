@@ -142,60 +142,6 @@ table.overtime tr.header > td {
   background-position: center;
 }
 
-/** Edit popup **/
-.ReactModal__Content {
-    height: 300px;
-    border-radius: 10px;
-    border-color: #157efb;
-}
-
-.overtimeForm {
-  width: 80%;
-  color: #333333;
-  border-spacing: 3px;
-}
-
-.overtimeForm tbody td:first-child {
-  width: 35%;
-  text-align: right;
-}
-
-.overtimeForm input {
-  line-height: 26px;
-  border-color: #cccccc;
-  border-width: 1px;
-  border-radius: 5px;
-  padding: 0px 5px;
-}
-
-.overtimeForm .react-datepicker__close-icon {
-  display: inline;
-}
-
-.overtimeForm textarea {
-  width: 100%;
-  padding: 5px;
-}
-
-.overtimeForm textarea {
-  resize: none;
-}
-
-.overtimeDatePicker{
-  width: 100%;
-}
-
-td.buttons {
-  text-align: center;
-}
-
-.buttons button {
-  padding: 3px 5px;
-  border: 1px solid #aaaaaa;
-  font-size: 14px;
-  border-radius: 5px;
-  margin: 5px;
-}
 
 /** Settings page **/
 .editFormWrapper {
@@ -220,13 +166,20 @@ td.buttons {
   width: 20%;
 }
 
-.editForm .formRow > input {
+.editForm .formRow input {
   line-height: 26px;
   border-color: #cccccc;
   border-width: 1px;
   border-radius: 5px;
   padding: 0px 5px;
   width: 100%;
+  color: #333333;
+}
+
+.editForm .formRow textarea {
+  width: 100%;
+  padding: 5px;
+  resize: none;
   color: #333333;
 }
 
@@ -241,4 +194,9 @@ td.buttons {
   border-radius: 5px;
   margin: 5px;
   color: #333333;
+}
+
+/* override style from the date picker component */
+.editForm .react-datepicker__close-icon {
+  display: inline;
 }

@@ -6,7 +6,6 @@
     "react": "^15.6.1",
     "react-datepicker": "^0.51.0",
     "react-dom": "^15.6.1",
-    "react-modal": "^2.2.2",
     "react-time-input": "0.0.16"
   },
   "devDependencies": {

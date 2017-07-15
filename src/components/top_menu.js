@@ -15,7 +15,7 @@ class TopMenu extends React.Component {
     return (
       <div className="topMenuWraper">
         <div className="topMenu">
-          <span className="addOvertime clickable" onClick={this.props.showPopupHandler}>Add Item</span>
+          <span className="addOvertime clickable" onClick={this.props.showAddNewOvertime}>Add Item</span>
           <span className="separator" />
           <span className="userSettings clickable" onClick={this.props.showSettings}>User Settings</span>
           <span className="separator" />
