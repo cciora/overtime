@@ -2,6 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import TopMenu from './top_menu';
 import OvertimeOverview from './overtime_overview';
+import Settings from './settings';
 import EditPopup from './edit_popup';
 
 class Overtime extends React.Component {
@@ -26,17 +27,18 @@ class Overtime extends React.Component {
     }
 
     this.state = {
-      user: 'cciora',
+      userSettings: {
+        userId: 'cciora'
+      },
       filterMonth: new Date().getMonth()+1,
       filterYear: new Date().getFullYear(),
       overtimeEntries: entries,
       popupVisible: false,
       popupData: {},
       nextKey: key,
-      visibleView: 'overtime'
+      visibleView: 'overview'
     };
   }
-
 
   changeMonthFilter(m) {
     this.setState({filterMonth: m});
@@ -94,15 +96,33 @@ class Overtime extends React.Component {
     this.setState({overtimeEntries: entries});
   }
 
+  changeVisibleView(viewId) {
+    this.setState({visibleView: viewId});
+  }
+
+  updateUserSettings(settings) {
+    this.setState({userSettings: settings});
+  }
+
   render() {
+    let content;
+    if(this.state.visibleView === 'settings'){
+      content = <Settings data={this.state.userSettings} updateSettings={(settings) => this.updateUserSettings(settings)}
+                    saveButtonHandler={() => this.changeVisibleView('overview')} cancelButtonHandler={() => this.changeVisibleView('overview')} />;
+    } else {
+      content = <OvertimeOverview entries={this.state.overtimeEntries} year={this.state.filterYear} month={this.state.filterMonth}
+                    openEditPopup={(o) => this.openEditPopup(o)} deleteOvertimeEntry={(o) => this.deleteOvertimeEntry(o)} />;
+    }
+    switch(this.state.visibleView) {
+      case 'settings' :
+    }
     return (
       <div id="overtime">
         <TopMenu selectedMonth={this.state.filterMonth} monthSelectionHandler={(m) => this.changeMonthFilter(m)}
           selectedYear={this.state.filterYear} yearSelectionHandler={(y) => this.changeYearFilter(y)}
-          showPopupHandler={() => this.openEditPopup()}
+          showPopupHandler={() => this.openEditPopup()} showSettings={() => this.changeVisibleView('settings')}
         />
-        <OvertimeOverview entries={this.state.overtimeEntries} year={this.state.filterYear} month={this.state.filterMonth}
-          openEditPopup={(o) => this.openEditPopup(o)} deleteOvertimeEntry={(o) => this.deleteOvertimeEntry(o)} />
+        {content}
         <EditPopup popupVisibility={this.state.popupVisible} popupData={this.state.popupData}
           savePopupHandler={(d) => this.savePopupAction(d)} cancelPopupHandler={() => this.setPopupVisibility(false)}
           updatePopupData={(d) => this.updatePopupData(d)}/>

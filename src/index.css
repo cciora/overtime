@@ -1,5 +1,6 @@
 #overtime {
   max-width: 1000px;
+  color: #333333;
 }
 
 /** Menu area **/
@@ -12,6 +13,7 @@
     background: linear-gradient(#dddddd, #aaaaaa); /* Standard syntax */
     border: 2px solid #aaaaaa;
     border-radius: 5px;
+    margin-bottom: 5px;
 }
 
 .topMenu {
@@ -91,7 +93,6 @@
 
 /** Overtime table **/
 table.overtime {
-  margin-top: 5px;
   width: 100%;
   table-layout: fixed;
   border: 2px solid #aaaaaa;
@@ -194,4 +195,50 @@ td.buttons {
   font-size: 14px;
   border-radius: 5px;
   margin: 5px;
+}
+
+/** Settings page **/
+.editFormWrapper {
+  border: 2px solid #aaaaaa;
+  border-radius: 5px;
+  padding: 0 20%;
+}
+
+.editForm {
+  width: 100%;
+  display: table;
+  border-spacing: 10px;
+}
+
+.editForm .formRow {
+  display: table-row;
+}
+
+.editForm .formRow > span {
+  display: table-cell;
+  text-align: left;
+  width: 20%;
+}
+
+.editForm .formRow > input {
+  line-height: 26px;
+  border-color: #cccccc;
+  border-width: 1px;
+  border-radius: 5px;
+  padding: 0px 5px;
+  width: 100%;
+  color: #333333;
+}
+
+.editFormWrapper .footer {
+  text-align: center;
+}
+
+.footer button {
+  padding: 3px 5px;
+  border: 1px solid #aaaaaa;
+  font-size: 14px;
+  border-radius: 5px;
+  margin: 5px;
+  color: #333333;
 }
