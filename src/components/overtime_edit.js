@@ -126,6 +126,10 @@ class OvertimeEdit extends React.Component {
     this.props.saveAction(this.state.data);
   }
 
+  isWeekday (d) {
+    return d.day() > 0 && d.day() < 6;
+  }
+
   render() {
     return (
       <div className="editFormWrapper">
@@ -133,7 +137,9 @@ class OvertimeEdit extends React.Component {
           <div className="formRow">
             <span>Date:</span>
             <DatePicker selected={this.state.data.date ? moment(this.state.data.date,'DD.MM.YYYY') : ''} onChange={this.handleOvertimeDateChange}
-              className="overtimeDatePicker" dateFormat="DD.MM.YYYY" placeholderText="Date" required="true" />
+              className="overtimeDatePicker" dateFormat="DD.MM.YYYY" placeholderText="Date" required="true"
+              minDate={new Date(new Date().getFullYear(), new Date().getMonth(), 1)}
+              filterDate={(this.isWeekday)} />
           </div>
           <div className="formRow">
             <span>Start Time:</span>
@@ -146,7 +152,9 @@ class OvertimeEdit extends React.Component {
           <div className="formRow">
             <span>Free date on:</span>
             <DatePicker selected={this.state.data.freeTimeOn ? moment(this.state.data.freeTimeOn,'DD.MM.YYYY') : ''} onChange={this.handleFreeTimeOnDateChange}
-              className="overtimeDatePicker" dateFormat="DD.MM.YYYY" isClearable="true" placeholderText="Free time on" />
+              className="overtimeDatePicker" dateFormat="DD.MM.YYYY" isClearable="true" placeholderText="Free time on"
+              minDate={new Date(new Date().getFullYear(), new Date().getMonth(), 1)}
+              filterDate={(this.isWeekday)} />
           </div>
           <div className="formRow">
             <span>Comment:</span>
