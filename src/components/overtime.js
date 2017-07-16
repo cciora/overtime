@@ -121,7 +121,8 @@ class Overtime extends React.Component {
     } else if (this.state.visibleView === view.OVERTIME_EDIT) {
       content = <OvertimeEdit data={this.state.editEntry}
                     saveAction={(d) => this.saveOvertimeEntry(d)}
-                    cancelAction={() => this.changeVisibleView(view.OVERTIME)} />
+                    cancelAction={() => this.changeVisibleView(view.OVERTIME)}
+                    entries={this.state.overtimeEntries} />
     } else {
       content = <OvertimeOverview entries={this.state.overtimeEntries} year={this.state.filterYear} month={this.state.filterMonth}
                     showEditPage={(d) => this.showEditPage(d)} deleteOvertimeEntry={(o) => this.deleteOvertimeEntry(o)} />;

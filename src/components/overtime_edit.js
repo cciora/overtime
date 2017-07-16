@@ -3,7 +3,7 @@ import React from 'react';
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import TimeInput from 'react-time-input';
+import TimeInput from 'time-input';
 
 class OvertimeEdit extends React.Component {
   constructor () {
@@ -13,8 +13,8 @@ class OvertimeEdit extends React.Component {
       validationMessage: '',
       data: {
         date : '',
-        startTime: '',
-        endTime: '',
+        startTime: '00:00',
+        endTime: '00:00',
         freeTimeOn: '',
         comment: ''
       }
@@ -29,7 +29,9 @@ class OvertimeEdit extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({data: this.props.data});
+    let temp = Object.assign({}, this.state.data);
+    temp = Object.assign(temp, this.props.data);
+    this.setState({data: temp});
   }
 
   handleOvertimeDateChange(date) {
@@ -66,8 +68,61 @@ class OvertimeEdit extends React.Component {
     return v && v.trim() !== '';
   }
 
+  getTimeStringInMinutes(str) {
+    const time = str.split(":");
+    return parseInt(time[0])*60 + parseInt(time[1]);
+  }
+
+  getEntryDurationInMinutes(e){
+    return this.getTimeStringInMinutes(e.endTime) - this.getTimeStringInMinutes(e.startTime);
+  }
+
+  overlappingTimeIntervals(e1, e2) {
+    const start1 = this.getTimeStringInMinutes(e1.startTime);
+    const end1 = this.getTimeStringInMinutes(e1.endTime);
+    const start2 = this.getTimeStringInMinutes(e2.startTime);
+    const end2 = this.getTimeStringInMinutes(e2.endTime);
+    if(!(start2 >= end1 || end2 <= start1)) {
+      this.setState({validationMessage: "Overlapping with another entry! " +
+        "("+e1.startTime+" -> " + e1.endTime+") " +
+        "("+e2.startTime+" -> " + e2.endTime+")"});
+      return true;
+    }
+    return false;
+  }
+
+  validateComparedToOtherEntries() {
+    let totalMinutesOnDay = this.getEntryDurationInMinutes(this.state.data);
+    for(let i=0; i<this.props.entries.length; i++){
+      const entry = this.props.entries[i];
+      if(entry.id !== this.state.data.id && entry.date === this.state.data.date) {
+        if(this.overlappingTimeIntervals(entry, this.state.data)) {
+          return false;
+        }
+        totalMinutesOnDay += this.getEntryDurationInMinutes(entry);
+      }
+    }
+    if(totalMinutesOnDay > 180) {
+      this.setState({validationMessage: "Maximum 3h overtime can be booked for one day! You have " + (totalMinutesOnDay-180) + " extra minutes!"});
+      return false;
+    }
+    return true;
+  }
+
   saveHandler() {
-    //TODO add validation
+    // the date is mandatory
+    if(!moment(this.state.data.date, "DD.MM.YYYY").isValid()) {
+      this.setState({validationMessage: "Please specify a valid date!"});
+      return;
+    }
+    // check the start time is before the end time
+    if(this.getTimeStringInMinutes(this.state.data.startTime) >= this.getTimeStringInMinutes(this.state.data.endTime)) {
+      this.setState({validationMessage: "End Time should be after Start Time!"});
+      return;
+    }
+    if(!this.validateComparedToOtherEntries()){
+      return;
+    }
     this.props.saveAction(this.state.data);
   }
 
@@ -82,11 +137,11 @@ class OvertimeEdit extends React.Component {
           </div>
           <div className="formRow">
             <span>Start Time:</span>
-            <TimeInput initTime={this.state.data.startTime} onTimeChange={this.handleStartTimeChange} />
+            <TimeInput value={this.state.data.startTime} onChange={this.handleStartTimeChange} />
           </div>
           <div className="formRow">
             <span>End Time:</span>
-            <TimeInput initTime={this.state.data.endTime} onTimeChange={this.handleEndTimeChange} />
+            <TimeInput value={this.state.data.endTime} onChange={this.handleEndTimeChange} />
           </div>
           <div className="formRow">
             <span>Free date on:</span>
@@ -101,6 +156,9 @@ class OvertimeEdit extends React.Component {
         <div className="footer">
           <button onClick={this.saveHandler}>Save</button>
           <button onClick={this.props.cancelAction}>Cancel</button>
+        </div>
+        <div className="validation">
+          {this.state.validationMessage}
         </div>
       </div>
     );
