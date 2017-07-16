@@ -35,9 +35,9 @@ class Overtime extends React.Component {
     this.state = {
       visibleView: view.OVERTIME,
       userSettings: {
-        userId: 'cciora',
-        userName: '',
-        superiorName: ''
+        userId: 'mmustermann',
+        userName: 'Max Mustermann',
+        superiorName: 'John Doe'
       },
       filterMonth: new Date().getMonth()+1,
       filterYear: new Date().getFullYear(),
@@ -46,9 +46,9 @@ class Overtime extends React.Component {
       nextKey: key
     };
 
-    // if (!this.state.userSettings.userId || !this.state.userSettings.userName || !this.state.userSettings.superiorName) {
-    //   this.state.visibleView = view.USER_SETTINGS;
-    // }
+    if (!this.state.userSettings.userId || !this.state.userSettings.userName || !this.state.userSettings.superiorName) {
+      this.state.visibleView = view.USER_SETTINGS;
+    }
   }
 
   changeMonthFilter(m) {
