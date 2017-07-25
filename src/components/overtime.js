@@ -4,11 +4,13 @@ import TopMenu from './top_menu';
 import OvertimeOverview from './overtime_overview';
 import Settings from './settings';
 import OvertimeEdit from './overtime_edit';
+import Users from './users';
 
 const view = {
   OVERTIME: 'overtime',
   OVERTIME_EDIT: 'overtimeEdit',
-  USER_SETTINGS: 'userSettings'
+  USER_SETTINGS: 'userSettings',
+  USERS: 'users'
 };
 
 class Overtime extends React.Component {
@@ -123,6 +125,8 @@ class Overtime extends React.Component {
                     saveAction={(d) => this.saveOvertimeEntry(d)}
                     cancelAction={() => this.changeVisibleView(view.OVERTIME)}
                     entries={this.state.overtimeEntries} />
+    } else if (this.state.visibleView == view.USERS) {
+      content = <Users cancelAction={() => this.changeVisibleView(view.OVERTIME)} />
     } else {
       content = <OvertimeOverview entries={this.state.overtimeEntries} year={this.state.filterYear} month={this.state.filterMonth}
                     showEditPage={(d) => this.showEditPage(d)} deleteOvertimeEntry={(o) => this.deleteOvertimeEntry(o)} />;
@@ -133,6 +137,7 @@ class Overtime extends React.Component {
           selectedYear={this.state.filterYear} yearSelectionHandler={(y) => this.changeYearFilter(y)}
           showAddNewOvertime={() => this.showEditPage({})}
           showSettings={() => this.changeVisibleView(view.USER_SETTINGS)}
+          showUsers={() => this.changeVisibleView(view.USERS)}
         />
         {content}
       </div>

@@ -24,7 +24,7 @@ class TopMenu extends React.Component {
           <span className="separator" />
           <span className="excelExport clickable" onClick={() => alert('Export to excel!')}>Export to Excel</span>
           <span className="separator" />
-          <span className="users clickable" onClick={() => alert('Set user roles')}>Users</span>
+          <span className="users clickable" onClick={this.props.showUsers}>Users</span>
           <span className="separator" />
         </div>
       </div>
