@@ -21,6 +21,11 @@ class TopMenu extends React.Component {
           <span className="separator" />
           <DateFilter month={this.props.selectedMonth} year={this.props.selectedYear}
             setMonth={this.props.monthSelectionHandler} setYear={this.props.yearSelectionHandler} />
+          <span className="separator" />
+          <span className="excelExport clickable" onClick={() => alert('Export to excel!')}>Export to Excel</span>
+          <span className="separator" />
+          <span className="users clickable" onClick={() => alert('Set user roles')}>Users</span>
+          <span className="separator" />
         </div>
       </div>
     );
